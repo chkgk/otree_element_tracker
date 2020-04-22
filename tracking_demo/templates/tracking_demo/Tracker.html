@@ -1,0 +1,85 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Track Element Hovers
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        .tracked_element {
+            width: 250px;
+            height: 100px;
+            margin: 10px;
+            display: block;
+        }
+        #box_1 {
+            background-color: lightskyblue;
+        }
+        #box_2 {
+            background-color: lightseagreen;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        Move your cursor over the two boxes 2-3 times. Then click next.<br>
+        All hover events are sent to the server using oTree 2.6 live features.
+    </p>
+    <p>Go to oTree's data export tab and download the dataset labeled "tracking_demo (custom)".</p>
+
+    <div id="box_1" class="tracked_element">
+        This is "box_1".<br>
+        Last event: <span id="box_1_state"></span><br>
+        Enter time: <span id="box_1_enter"></span><br>
+        Leave time: <span id="box_1_leave"></span>
+    </div>
+
+    <div id="box_2" class="tracked_element">
+        This is "box_2".<br>
+        Last event: <span id="box_2_state"></span><br>
+        Enter time: <span id="box_2_enter"></span><br>
+        Leave time: <span id="box_2_leave"></span>
+    </div>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        let hover_events = {};
+
+        $(".tracked_element").mouseenter(function(e) {
+            // entering starts a new hover event
+            let enter_time = Date.now();
+            hover_events[e.target.id] = {
+                element_id: e.target.id,
+                enter_time: enter_time,
+                leave_time: undefined
+            };
+
+           // visualization only
+           $("#"+e.target.id+"_state").text("mouse entered");
+           $("#"+e.target.id+"_enter").text(enter_time);
+           $("#"+e.target.id+"_leave").text("");
+        });
+
+        $(".tracked_element").mouseleave(function (e) {
+            // this concludes a hover event
+            let leave_time = Date.now();
+            hover_events[e.target.id]["leave_time"] = leave_time;
+
+            // send the event and free up the element in the dictionary.
+            liveSend(hover_events[e.target.id]);
+            delete(hover_events[e.target.id]);
+
+            // visualization only
+            $("#"+e.target.id+"_state").text('mouse left');
+            $("#"+e.target.id+"_leave").text(leave_time);
+        });
+
+    </script>
+{% endblock %}
