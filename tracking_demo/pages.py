@@ -4,6 +4,9 @@ from .models import Constants
 
 
 class Tracker(Page):
-    live_method = 'store_tracking_data'
+    @staticmethod
+    def live_method(player, data):
+        player.store_tracking_data(data)
+
 
 page_sequence = [Tracker]

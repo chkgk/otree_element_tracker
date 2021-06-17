@@ -7,7 +7,7 @@ This demo shows how to track which elements players hover their mouse over. It s
 I have created a [simple demo](https://otree-element-tracker.herokuapp.com).
 
 ## Requirements
-This project uses oTree version 2.6.0b6 but should work with newer versions. To install the current pre-release beta use ```pip install --pre otree```.
+This project uses oTree version 5.2.4 but should work with newer versions.
 
 ## Details
 On the template I added two listeners that listen for mouseenter and mouseleave events on elements with the "tracked_element" class. If these events are fired, a "hover object" is created which stores the element's id as well as the unix timestamp in milliseconds since epoch at the time the mouse enters the element and when it leaves it again. (Make sure that the elements you track do not overlap.)
