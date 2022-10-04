@@ -3,9 +3,6 @@
 ## Overview
 This demo shows how to track which elements players hover their mouse over. It sends the events to the server immediately using oTree's  new live page beta features. Each element is then stored utilizing a custom data model.
 
-## Demo
-I have created a [simple demo](https://otree-element-tracker.herokuapp.com).
-
 ## Requirements
 This project uses oTree version 5.2.4 but should work with newer versions.
 
